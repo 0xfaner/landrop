@@ -59,6 +59,16 @@ Run `landrop serve --help` for all startup options. Common options include `--di
 
 If files from an earlier release are still in `LanDrop/shared` under your user configuration directory, move them into the new shared folder or use `--dir` to keep sharing the old one.
 
+## Releases
+
+Every push to `main` replaces the assets of the rolling [nightly release](https://github.com/0xfaner/landrop/releases/tag/nightly), so a fixed link always serves the newest build without adding another release:
+
+```
+https://github.com/0xfaner/landrop/releases/download/nightly/landrop-darwin-arm64
+```
+
+Tagged versions publish a release of their own. Set `const version` in `internal/landrop/cli.go` to match the tag, then run `git tag v0.1.2 && git push origin v0.1.2`. The `releases/latest/download/` links point at the newest tagged version, and pushing an existing tag again replaces its assets instead of creating a new release.
+
 ## Build
 
 Requires Go 1.25 or later and Node.js 22.12 or later. The build embeds the Vite, React, and TypeScript frontend from `web/dist` into the Go executable.
@@ -69,7 +79,7 @@ node scripts/build.mjs
 node scripts/build.mjs --release
 ```
 
-The local build produces `dist/landrop` (`dist/landrop.exe` on Windows). The release build produces four single-file executables for macOS and Windows on arm64 and amd64. Each has an uncompressed size budget of 10 MiB.
+The local build produces `dist/landrop` (`dist/landrop.exe` on Windows). The release build produces six single-file executables for macOS, Linux, and Windows on arm64 and amd64. Each has an uncompressed size budget of 10 MiB.
 
 To run Go tests or start the application from source, build the frontend first.
 

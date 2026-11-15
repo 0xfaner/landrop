@@ -5,7 +5,8 @@ import { fileURLToPath } from 'node:url'
 const root = fileURLToPath(new URL('../', import.meta.url))
 const release = process.argv.includes('--release')
 const targets = release ? [
-  ['darwin', 'arm64'], ['darwin', 'amd64'], ['windows', 'amd64'], ['windows', 'arm64'],
+  ['darwin', 'arm64'], ['darwin', 'amd64'], ['linux', 'arm64'], ['linux', 'amd64'],
+  ['windows', 'amd64'], ['windows', 'arm64'],
 ] : [[process.platform === 'win32' ? 'windows' : process.platform, { x64: 'amd64', arm64: 'arm64' }[process.arch]]]
 
 function run(command, args, env = process.env) {
