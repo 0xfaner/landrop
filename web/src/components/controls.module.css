@@ -1,0 +1,19 @@
+.iconButton {
+  flex: none;
+  inline-size: var(--icon-hit-width, var(--icon-hit-size, var(--control-size)));
+  min-inline-size: 0;
+  block-size: var(--icon-hit-size, var(--control-size));
+  padding: 0;
+  vertical-align: middle;
+}
+
+.iconButton[data-size="small"] { --icon-hit-size: var(--control-size-small); }
+.iconButton[data-variant="invisible"] { color: var(--muted); }
+.iconButton[data-variant="invisible"]:is(:hover, [aria-expanded="true"]):not(:disabled) {
+  background: var(--hover);
+  color: var(--text);
+}
+
+@media (pointer: coarse) {
+  .iconButton { --control-size: 38px; }
+}

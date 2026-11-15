@@ -1,0 +1,111 @@
+:root {
+  --font-family: var(--fontStack-system, system-ui, sans-serif);
+  --mono: var(--fontStack-monospace, monospace);
+  --text-small: 12px;
+  --text-ui: 13px;
+  --text-body: 14px;
+  --text-heading: 16px;
+  --font-ui: 400 var(--text-ui)/20px var(--font-family);
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --panel-inset: var(--space-4);
+  --section-gap: var(--space-3);
+  --menu-row-height: 34px;
+  --control-size: 32px;
+  --control-size-small: 28px;
+  --panel-radius: 12px;
+  --control-radius: 7px;
+  --layer-editor: 1;
+  --layer-tabs: 2;
+  --layer-drag-hint: 3;
+  --layer-menu: 4;
+  --frame-width: 880px;
+  --frame-gutter: 20px;
+  --bg: #f4f4f3;
+  --surface: #fff;
+  --border: #dededb;
+  --text: #222221;
+  --muted: #60605d;
+  --accent: #42627d;
+  --danger: #b62e40;
+  --well: #f6f6f5;
+  --track: #eaeae7;
+  --hover: #f0f0ee;
+  --tint: #ececea;
+  color-scheme: light;
+}
+
+:root[data-color-mode="dark"] {
+  --bg: #171717;
+  --surface: #202020;
+  --border: #393938;
+  --text: #eeeeeb;
+  --muted: #b1b1ad;
+  --accent: #a3b9cd;
+  --danger: #ff9aa7;
+  --well: #242424;
+  --track: #30302e;
+  --hover: #2a2a29;
+  --tint: #30302e;
+  color-scheme: dark;
+}
+
+[data-component="BaseStyles"] {
+  --BaseStyles-fontFamily: var(--font-family);
+  --fgColor-default: var(--text);
+  --fgColor-muted: var(--muted);
+  --fgColor-accent: var(--accent);
+  --fgColor-danger: var(--danger);
+  --bgColor-default: var(--surface);
+  --bgColor-muted: var(--well);
+  --borderColor-default: var(--border);
+  --control-small-size: var(--control-size-small);
+  --button-default-bgColor-rest: transparent;
+  --button-default-bgColor-hover: var(--hover);
+  --button-default-bgColor-active: var(--track);
+  --button-default-bgColor-disabled: var(--well);
+  --button-default-borderColor-rest: var(--border);
+  --button-default-borderColor-hover: var(--border);
+  --button-default-borderColor-disabled: var(--border);
+  --button-default-shadow-resting: none;
+  --button-danger-bgColor-rest: transparent;
+  --button-danger-bgColor-hover: var(--hover);
+  --button-danger-bgColor-active: var(--track);
+  --button-danger-fgColor-rest: var(--danger);
+  --button-danger-fgColor-hover: var(--danger);
+  --button-danger-fgColor-active: var(--danger);
+  --button-danger-borderColor-hover: var(--border);
+  --button-danger-borderColor-active: var(--border);
+  --button-danger-shadow-selected: none;
+  --button-invisible-bgColor-hover: var(--hover);
+  --control-borderColor-rest: var(--border);
+  --control-transparent-bgColor-hover: var(--hover);
+  --focus-outlineColor: var(--accent);
+  color: var(--text);
+  font-size: var(--text-body);
+}
+
+[data-component="BaseStyles"] [data-component="Button"][data-variant="danger"] {
+  box-shadow: none;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); }
+h1, h2, h3, p { margin: 0; }
+button, input, select, textarea { font: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+@media (pointer: coarse) {
+  :root { --control-size-small: 32px; }
+}
+
+@media (max-width: 680px) {
+  :root {
+    --frame-gutter: 14px;
+    --panel-inset: var(--space-3);
+    --section-gap: var(--space-2);
+    --menu-row-height: 38px;
+  }
+}

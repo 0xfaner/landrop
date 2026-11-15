@@ -1,0 +1,28 @@
+{
+  "name": "landrop-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1"
+  },
+  "dependencies": {
+    "@primer/primitives": "11.10.0",
+    "@primer/react": "38.46.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "@primer/octicons-react": "19.42.0"
+  },
+  "devDependencies": {
+    "vite": "8.3.8",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "6.0.3"
+  },
+  "allowScripts": {
+    "fsevents@2.3.3": true
+  }
+}

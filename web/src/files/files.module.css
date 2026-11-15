@@ -1,0 +1,261 @@
+.uploadProgress { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 5px 10px; color: var(--muted); }
+.uploadProgress progress { grid-column: 1 / -1; width: 100%; height: 7px; accent-color: var(--accent); }
+
+.explorer {
+  --file-control: var(--control-size);
+  --files-inset: calc(var(--panel-inset) - var(--space-1));
+  --file-label-gap: 8px;
+  --file-columns: minmax(0, 1fr) 64px 152px var(--file-control);
+  --file-column-gap: var(--space-2);
+  container-type: inline-size;
+  gap: 0;
+}
+.filesHeading { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px var(--files-inset); }
+.fileControls { display: flex; flex: 0 0 auto; align-items: center; justify-content: space-between; gap: 10px; }
+.fileToolbar { gap: 6px; }
+.fileViews {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--well);
+}
+.fileViews [aria-pressed="true"] { background: var(--tint); color: var(--text); }
+.fileUpload { min-block-size: var(--file-control); }
+.newFolderIcon { position: relative; display: flex; }
+.newFolderIcon > :last-child {
+  position: absolute;
+  inset: auto -3px -2px auto;
+  border-radius: 50%;
+  background: var(--surface);
+}
+.fileChevron { width: 12px; height: 12px; color: var(--muted); }
+.filePath {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  min-width: 0;
+}
+.fileCrumbs { display: flex; flex: 0 1 auto; align-items: center; gap: 4px; min-width: 0; padding: 0; margin: 0; list-style: none; }
+.fileCrumbs li { display: flex; flex: none; align-items: center; gap: 4px; }
+.fileCrumbs .currentCrumb { flex: 0 1 auto; min-width: 0; }
+.fileCrumbsMeasure { position: absolute; inset: 0; overflow: hidden; visibility: hidden; pointer-events: none; }
+.fileCrumbsMeasure .fileCrumbs { width: max-content; }
+.filePath > .fileCrumbs { flex: 1; }
+.rootCrumb { --icon-hit-width: var(--file-control); }
+.crumbButton { min-height: var(--file-control); border: 1px solid transparent; border-radius: 5px; background: transparent; color: var(--muted); cursor: pointer; }
+.crumbButton:hover { background: var(--hover); }
+.rootCrumb button[aria-current] { color: var(--text); cursor: default; }
+.filePath button[data-drop-target] { border-color: var(--accent); background: var(--tint); }
+.fileCrumbs li:not(.rootCrumb, .overflowCrumb) > :is(button, span) { display: block; min-width: 0; padding: 3px 5px; text-align: start; white-space: nowrap; font-size: var(--text-ui); }
+.currentCrumb > span { overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
+.fileFeedback { display: grid; gap: 4px; padding: 8px var(--files-inset); border-top: 1px solid var(--border); overflow-wrap: anywhere; font-size: var(--text-small); }
+.fileDropHint {
+  position: fixed;
+  inset: auto 12px max(12px, env(safe-area-inset-bottom));
+  z-index: var(--layer-drag-hint);
+  width: fit-content;
+  max-width: min(440px, calc(100% - 24px));
+  margin-inline: auto;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  overflow-wrap: anywhere;
+  font-size: var(--text-small);
+  pointer-events: none;
+}
+.fileError { padding: 6px var(--files-inset) 12px; }
+.fileTree, .destinationList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.fileTree { border: 1px solid transparent; border-radius: 0 0 calc(var(--panel-radius) - 1px) calc(var(--panel-radius) - 1px); }
+.fileTree[data-drop-target] { border-color: var(--accent); background: var(--tint); }
+.treeEntry { border: 1px solid transparent; }
+.treeEntry:hover, .treeEntry:focus-within { background: var(--hover); }
+.treeEntry[data-selected] { background: var(--tint); }
+.treeEntry[data-drop-target] { border-color: var(--accent); background: var(--tint); }
+.fileListHead, .treeRow {
+  display: grid;
+  grid-template-columns: var(--file-columns);
+  align-items: center;
+  gap: var(--file-column-gap);
+}
+
+.treeRow { min-width: 0; padding-inline: var(--files-inset); }
+.fileName { display: flex; align-items: center; min-width: 0; }
+.treeRow[data-editing] .fileName { grid-column: 1 / -1; }
+.fileSize { color: var(--muted); font-size: var(--text-small); }
+.treeLabel {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  min-height: var(--file-control);
+  justify-content: flex-start;
+  gap: var(--file-label-gap);
+  padding: 2px 4px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text);
+  font-size: var(--text-ui);
+  line-height: 20px;
+  cursor: pointer;
+  text-align: left;
+}
+.treeLabel:focus-visible { outline-offset: -2px; }
+.treeLabel svg { flex: none; color: var(--muted); }
+
+.fileTree[data-view="tree"] {
+  --tree-indent: 16px;
+  --tree-toggle: 22px;
+  --tree-row-height: var(--file-control);
+  --tree-guide: var(--border);
+  padding-block: 6px;
+}
+.fileTree[data-view="tree"]:is(:hover, :focus-within) { --tree-guide: color-mix(in srgb, var(--border), var(--muted) 20%); }
+.fileTree[data-view="tree"] > li { --indent: calc(min(var(--depth, 0), 8) * var(--tree-indent)); }
+.fileTree[data-view="tree"] .treeEntry { position: relative; border-radius: 4px; }
+.fileTree[data-view="tree"] .treeRow { min-height: var(--tree-row-height); }
+.fileTree[data-view="tree"] .fileName { padding-inline-start: var(--indent); }
+.fileTree[data-view="tree"] .treeLabel { min-height: var(--tree-row-height); padding-inline: 0 4px; }
+.fileTree[data-view="tree"] [data-selected] .treeLabel { font-weight: 600; }
+.fileTree[data-view="tree"] [data-selected]::after {
+  position: absolute;
+  inset-block: 6px;
+  inset-inline-start: 0;
+  inline-size: 2px;
+  border-radius: 1px;
+  background: var(--muted);
+  content: '';
+  pointer-events: none;
+}
+.fileTree[data-view="tree"] .fileName::before, .fileTree[data-view="tree"] .treeStatus[data-nested]::before {
+  position: absolute;
+  inset-block: -1px;
+  inset-inline-start: calc(var(--files-inset) + var(--tree-toggle) / 2 - .5px);
+  inline-size: var(--indent);
+  background: repeating-linear-gradient(to right, var(--tree-guide) 0 1px, transparent 1px var(--tree-indent));
+  content: '';
+  pointer-events: none;
+}
+.treeDisclosure {
+  display: inline-grid;
+  flex: none;
+  inline-size: var(--tree-toggle);
+  block-size: var(--tree-row-height);
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+}
+button.treeDisclosure { cursor: pointer; }
+.treeDisclosure:is(:hover, :focus-visible, [aria-expanded="true"]) { color: var(--text); }
+.treeDisclosure:focus-visible { outline-offset: -2px; }
+.treeMore { --icon-hit-size: var(--file-control); }
+
+.fileListHead {
+  min-height: 32px;
+  /* Match the list and row borders so headers and metadata line up. */
+  padding-inline: calc(var(--files-inset) + 2px);
+  border-block: 1px solid var(--border);
+  background: var(--well);
+  font-size: var(--text-small);
+}
+.nameHeader { display: flex; align-items: center; justify-content: space-between; gap: var(--space-1); min-width: 0; }
+.sortColumn {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: var(--space-1);
+  min-height: 28px;
+  padding: 0 var(--space-1);
+  border: 0;
+  border-radius: var(--control-radius);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.fileListHead > .sortColumn { margin-inline-start: calc(-1 * var(--space-1)); }
+.sortColumn:is(:hover, [data-sorted]) { color: var(--text); }
+.sortColumn[data-sorted] { font-weight: 600; }
+.narrowSort { display: none; }
+.fileTree[data-view="list"] .treeRow { min-height: max(38px, var(--file-control)); }
+.fileTree[data-view="list"] .treeEntry + .treeEntry { border-top-color: var(--border); border-radius: 0; }
+.fileModified { color: var(--muted); font-size: var(--text-small); }
+.fileActions {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  max-height: calc(100dvh - 2 * var(--space-4));
+  overflow: auto;
+}
+.treeStatus { padding: 8px var(--files-inset); font-size: var(--text-small); line-height: 18px; overflow-wrap: anywhere; }
+.fileTree[data-view="tree"] .treeStatus[data-nested] {
+  position: relative;
+  min-height: calc(var(--tree-row-height) + 2px);
+  padding-block: calc((var(--tree-row-height) - 18px) / 2 + 1px);
+  padding-inline-start: calc(var(--files-inset) + var(--indent) + var(--tree-toggle) + 16px + var(--file-label-gap) + 1px);
+}
+.fileTree[data-view="tree"] .treeStatus[data-nested]::before { inset-inline-start: calc(var(--files-inset) + var(--tree-toggle) / 2 + .5px); }
+
+.renameForm { display: flex; flex: 1; align-items: center; gap: 4px; min-width: 0; padding: 2px 4px; }
+.renameInput { flex: 1; min-width: 0; }
+.fileDialog form { display: grid; gap: var(--section-gap); }
+.fileDialog label, .fileDialog button { margin: 0; }
+.fileDialog fieldset { min-width: 0; padding: 8px; margin: 0; border: 1px solid var(--border); border-radius: 8px; font-size: var(--text-ui); }
+.fileDialog legend { color: var(--muted); }
+.destinationPath { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 6px; }
+.destinationList { max-height: min(36vh, 240px); overflow: auto; overscroll-behavior: contain; }
+.destinationList button { width: 100%; justify-content: space-between; gap: 8px; margin-bottom: 4px; white-space: normal; text-align: left; overflow-wrap: anywhere; }
+
+@media (hover: hover) and (pointer: fine) {
+  .fileTree[data-view="tree"] .treeMore { opacity: 0; }
+  .fileTree[data-view="tree"] .treeEntry:is(:hover, :focus-within, [data-selected]) .treeMore, .fileTree[data-view="tree"] .treeMore[aria-expanded="true"] { opacity: 1; }
+}
+@media (pointer: coarse) {
+  .explorer { --control-size: 38px; }
+  .fileTree[data-view="tree"] { --tree-toggle: 30px; --tree-row-height: var(--file-control); }
+}
+@container (max-width: 540px) {
+  .fileTree[data-view="tree"] { --tree-indent: 12px; }
+  .fileTree, .fileListHead {
+    --file-columns: minmax(0, 1fr) 52px var(--file-control);
+    --file-column-gap: var(--space-1);
+  }
+  .fileModified { display: none; }
+  .narrowSort { display: block; flex: none; }
+}
+@container (max-width: 520px) {
+  .filesHeading { align-items: stretch; flex-direction: column; gap: 4px; }
+  .filePath { max-width: 100%; }
+  .fileControls { flex-wrap: wrap; gap: 6px; }
+  .fileToolbar { margin-inline-start: auto; gap: 3px; }
+}
+@media (max-width: 680px) {
+  .explorer { --file-control: var(--control-size); }
+  .filesHeading { padding: 6px var(--files-inset); }
+  .fileTree[data-view="tree"] { padding-block: 4px; }
+  .treeStatus { padding-block: 6px; }
+}
+@media (max-width: 560px) {
+  .fileDialog input { width: 100%; min-height: 38px; font-size: 16px; }
+}
+
+@container (min-width: 350px) and (max-width: 520px) {
+  .filesHeading:has(.filePath[data-root]) { flex-direction: row; align-items: center; }
+}
+
+.emptyState { display: grid; justify-items: center; align-content: center; gap: 4px; min-height: 108px; padding: 12px; text-align: center; }
+.emptyState strong { color: var(--text); font-size: var(--text-ui); font-weight: 600; }
+.emptyIcon { display: grid; place-items: center; width: 34px; height: 34px; margin-bottom: 3px; border-radius: 8px; background: var(--tint); }

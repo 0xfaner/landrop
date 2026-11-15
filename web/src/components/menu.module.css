@@ -1,0 +1,55 @@
+.surface,
+.surface[data-component="ActionMenu.Overlay"] {
+  --control-transparent-bgColor-hover: var(--hover);
+  --control-transparent-bgColor-selected: var(--tint);
+  --focus-outline-color: var(--accent);
+  /* Primer's auto width still has a minimum. Let short labels size the menu. */
+  inline-size: max-content;
+  min-inline-size: 0;
+  max-inline-size: calc(100vi - 2 * var(--space-2));
+  padding: var(--space-1);
+  border: 1px solid var(--border);
+  border-radius: var(--control-radius);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 8px 24px #0004;
+}
+
+/* Primer sets the stacking level on its portal wrapper. */
+:global([data-component="Portal"]):has(> .surface) { z-index: var(--layer-menu) !important; }
+
+.item,
+.surface [role="menuitemradio"] {
+  min-height: var(--menu-row-height);
+  border-radius: calc(var(--control-radius) - 2px);
+  font: var(--font-ui);
+}
+
+.surface [role="menuitemradio"] > :has(> [data-component="ActionList.Selection"]) {
+  grid-template-areas: "spacer leadingVisual content leadingAction";
+  grid-template-columns: min-content min-content minmax(0, 1fr) min-content;
+}
+
+.surface [role="menuitemradio"] [data-component="ActionList.Selection"] {
+  margin-inline-start: var(--space-2);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-1) var(--space-2);
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.item:where([data-danger]) { color: var(--danger); }
+.item:enabled:hover, a.item:hover { background: var(--hover); }
+.item:disabled { opacity: .55; cursor: default; }
+.item:focus-visible { outline-offset: -2px; }
+.itemLabel { flex: 1; min-width: 0; overflow-wrap: anywhere; }

@@ -1,0 +1,44 @@
+.workspace { --tab-height: 40px; }
+.workspace, .tabPanel:not([hidden]) { display: grid; gap: var(--section-gap); min-width: 0; }
+.tabs {
+  position: sticky;
+  top: 0;
+  z-index: var(--layer-tabs);
+  display: flex;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+.tabs button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--tab-height);
+  padding: 0 12px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: var(--text-ui);
+  font-weight: 600;
+  cursor: pointer;
+}
+.tabs button:hover { color: var(--text); }
+.tabs button[aria-selected="true"] { color: var(--text); }
+.tabs button[aria-selected="true"]::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 -1px;
+  height: 2px;
+  background: var(--accent);
+  pointer-events: none;
+}
+.tabs button:focus-visible { outline-offset: -2px; }
+.unread { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+@media (max-width: 680px) {
+  .workspace { --tab-height: 38px; }
+  .tabs { gap: 0; }
+  .tabs button { flex: 1; }
+}
